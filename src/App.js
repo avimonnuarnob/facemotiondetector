@@ -18,7 +18,7 @@ function App() {
   //   writeUserData('1','n','e','i')
 
   const onKeyPressHandler = (e) => {
-    console.log(`You pressed the ${e.key} key`);
+    // console.log(`You pressed the ${e.key} key`);
   };
 
   useEffect(() => {
@@ -28,10 +28,31 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    if (window && document) {
+      const script = document.createElement('script');
+      const body = document.getElementsByTagName('body')[0];
+      script.src = 'https://webgazer.cs.brown.edu/webgazer.js?';
+      body.appendChild(script);
+      script.addEventListener('load', () => {
+        window.webgazer
+          .setGazeListener(function(data) {
+            if (data == null) {
+              return;
+            }
+            var xprediction = data.x; //these x coordinates are relative to the viewport
+            var yprediction = data.y; //these y coordinates are relative to the viewport
+            console.log(xprediction, yprediction); //elapsed time is based on time since begin was called
+          })
+          .begin();
+      });
+    }
+  }, []);
+
   return (
     <>
       <div id='app' className='app'>
-        <div class='overlay'></div>
+        <div className='overlay'></div>
         <div className='text'>
           <span aria-label='emoji' role='img' id='emoji'>
             😐
