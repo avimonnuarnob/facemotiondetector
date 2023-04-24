@@ -18,7 +18,7 @@ function App() {
   //   writeUserData('1','n','e','i')
 
   const onKeyPressHandler = (e) => {
-    // console.log(`You pressed the ${e.key} key`);
+    console.log(`You pressed the ${e.key} key`);
   };
 
   useEffect(() => {
@@ -40,9 +40,12 @@ function App() {
             if (data == null) {
               return;
             }
-            var xprediction = data.x; //these x coordinates are relative to the viewport
-            var yprediction = data.y; //these y coordinates are relative to the viewport
-            console.log(xprediction, yprediction); //elapsed time is based on time since begin was called
+
+            console.log(
+              `eye gaze cord[x,y]: ${data.x}, ${
+                data.y
+              }, at ${new Date().getTime()}`,
+            );
           })
           .begin();
       });
