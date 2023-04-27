@@ -1,7 +1,18 @@
 import React, { useEffect, useRef } from 'react';
 import './App.css';
 
-var timerStart = Date.now();
+// var timerStart = Date.now();
+
+//initialize throttlePause variable outside throttle function
+let throttleTimer;
+const throttle = (callback, time) => {
+  if (throttleTimer) return;
+  throttleTimer = true;
+  setTimeout(() => {
+    callback();
+    throttleTimer = false;
+  }, time);
+};
 
 // import { getDatabase, ref, set } from "firebase/database";
 
@@ -41,11 +52,13 @@ function App() {
               return;
             }
 
-            console.log(
-              `eye gaze cord[x,y]: ${data.x}, ${
-                data.y
-              }, at ${new Date().getTime()}`,
-            );
+            throttle(function() {
+              console.log(
+                `eye gaze cord[x,y]: ${data.x}, ${
+                  data.y
+                }, at ${new Date().getTime()}`,
+              );
+            }, 3000);
           })
           .begin();
       });
